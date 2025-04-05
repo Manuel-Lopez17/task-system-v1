@@ -1,0 +1,10 @@
+---
+export const prerender = false;
+import Layout from "../../layouts/Layout.astro";
+import TaskDetails from "../../components/TaskDetails";
+
+const { id: taskId } = Astro.params;
+---
+<Layout title={`Task Details - ${taskId}`}>
+  <TaskDetails taskId={taskId} client:load />
+</Layout>

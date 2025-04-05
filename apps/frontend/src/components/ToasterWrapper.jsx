@@ -1,0 +1,6 @@
+// src/components/ToasterWrapper.jsx
+import { Toaster } from 'sonner';
+
+export default function ToasterWrapper() {
+  return <Toaster richColors position="top-right" />;
+}
