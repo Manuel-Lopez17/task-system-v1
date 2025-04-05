@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import SubtaskSelector from './SubtaskSelector';
 import { taskService } from '../services/taskService';
+import '../styles/Dialog.css';
 
 function CreateTaskDialog({ onTaskCreated }) {
   const [formData, setFormData] = useState({
@@ -29,36 +30,36 @@ function CreateTaskDialog({ onTaskCreated }) {
 
   return (
     <>
-      <button onClick={openDialog} className="px-4 py-2 bg-blue-500 text-white rounded">
+      <button onClick={openDialog} className="dialog-btn primary-btn">
         Crear Tarea
       </button>
-      <dialog ref={dialogRef} className="p-4 rounded shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Crear Nueva Tarea</h2>
+      <dialog ref={dialogRef} className="dialog">
+        <h2 className="dialog-title">Crear Nueva Tarea</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label className="block mb-1">Título</label>
+          <div className="form-group">
+            <label className="form-label">Título</label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="border p-2 w-full"
+              className="form-input"
             />
           </div>
-          <div className="mb-2">
-            <label className="block mb-1">Descripción</label>
+          <div className="form-group">
+            <label className="form-label">Descripción</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="border p-2 w-full"
+              className="form-textarea"
             />
           </div>
-          <div className="mb-2">
-            <label className="block mb-1">Prioridad</label>
+          <div className="form-group">
+            <label className="form-label">Prioridad</label>
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="border p-2 w-full"
+              className="form-select"
             >
               <option value="Low">Baja</option>
               <option value="Medium">Media</option>
@@ -66,12 +67,12 @@ function CreateTaskDialog({ onTaskCreated }) {
               <option value="Urgent">Urgente</option>
             </select>
           </div>
-          <div className="mb-2">
-            <label className="block mb-1">Estado</label>
+          <div className="form-group">
+            <label className="form-label">Estado</label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="border p-2 w-full"
+              className="form-select"
             >
               <option value="Backlog">Backlog</option>
               <option value="Unstarted">Sin iniciar</option>
@@ -80,25 +81,25 @@ function CreateTaskDialog({ onTaskCreated }) {
               <option value="Canceled">Cancelada</option>
             </select>
           </div>
-          <div className="mb-2">
-            <label className="block mb-1">Estimate</label>
+          <div className="form-group">
+            <label className="form-label">Estimate</label>
             <input
               type="number"
               min="0"
               value={formData.estimate}
               onChange={(e) => setFormData({ ...formData, estimate: parseInt(e.target.value) })}
-              className="border p-2 w-full"
+              className="form-input"
             />
           </div>
           <SubtaskSelector
             selectedIds={formData.subtasks || []}
             onChange={(subtasks) => setFormData({ ...formData, subtasks })}
           />
-          <div className="flex justify-end gap-2 mt-4">
-            <button type="button" onClick={closeDialog} className="px-4 py-2 bg-gray-300 rounded">
+          <div className="form-actions">
+            <button type="button" onClick={closeDialog} className="dialog-btn secondary-btn">
               Cancelar
             </button>
-            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+            <button type="submit" className="dialog-btn primary-btn">
               Crear
             </button>
           </div>

@@ -1,0 +1,45 @@
+.task-container {
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.task-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.task-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.task-pagination {
+  margin-top: 20px;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-pagination button {
+  border: none;
+  cursor: pointer;
+}
+
+.task-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

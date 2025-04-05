@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import UpdateTaskDialog from './UpdateTaskDialog';
 import DeleteTaskDialog from './DeleteTaskDialog';
 import { taskService } from '../services/taskService';
+import '../styles/TaskDetails.css';
 
 function TaskDetails({ taskId }) {
   const [task, setTask] = useState(null);
@@ -35,43 +36,41 @@ function TaskDetails({ taskId }) {
   if (!task) return <p>Tarea no encontrada</p>;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Detalles de Tarea {task.title}</h1>
-      <table className="min-w-full border-collapse mb-4">
+    <div className="task-details">
+      <h1 className="task-title">Detalles de Tarea {task.title}</h1>
+      <table className="task-table">
         <tbody>
           <tr>
-            <th className="border p-2">ID</th>
-            <td className="border p-2">{task.id}</td>
+            <th>ID</th>
+            <td>{task.id}</td>
           </tr>
           <tr>
-            <th className="border p-2">Title</th>
-            <td className="border p-2">{task.title}</td>
+            <th>Title</th>
+            <td>{task.title}</td>
           </tr>
           <tr>
-            <th className="border p-2">Description</th>
-            <td className="border p-2">{task.description}</td>
+            <th>Description</th>
+            <td>{task.description}</td>
           </tr>
           <tr>
-            <th className="border p-2">Priority</th>
-            <td className="border p-2">{task.priority}</td>
+            <th>Priority</th>
+            <td>{task.priority}</td>
           </tr>
           <tr>
-            <th className="border p-2">Status</th>
-            <td className="border p-2">{task.status}</td>
+            <th>Status</th>
+            <td>{task.status}</td>
           </tr>
           <tr>
-            <th className="border p-2">Estimate</th>
-            <td className="border p-2">{task.estimate}</td>
+            <th>Estimate</th>
+            <td>{task.estimate}</td>
           </tr>
           <tr>
-            <th className="border p-2">Subtasks</th>
-            <td className="border p-2">
+            <th>Subtasks</th>
+            <td>
               {task.subtasks?.length > 0
                 ? task.subtasks.map((subtask, index) => (
                     <span key={subtask.id}>
-                      <a href={`/task/${subtask.id}`} className="text-blue-600 hover:underline">
-                        {subtask.title}
-                      </a>
+                      <a href={`/task/${subtask.id}`}>{subtask.title}</a>
                       {index < task.subtasks.length - 1 && ', '}
                     </span>
                   ))
@@ -79,8 +78,8 @@ function TaskDetails({ taskId }) {
             </td>
           </tr>
           <tr>
-            <th className="border p-2">Estimate Breakdown</th>
-            <td className="border p-2">
+            <th>Estimate Breakdown</th>
+            <td>
               <ul>
                 <li>⏳ Pendiente: {task.estimates?.pending}</li>
                 <li>🔄 En progreso: {task.estimates?.inProgress}</li>
@@ -89,24 +88,22 @@ function TaskDetails({ taskId }) {
             </td>
           </tr>
           <tr>
-            <th className="border p-2">Creation Date</th>
-            <td className="border p-2">{new Date(task.dates?.createdAt).toLocaleDateString()}</td>
+            <th>Creation Date</th>
+            <td>{new Date(task.dates?.createdAt).toLocaleDateString()}</td>
           </tr>
           <tr>
-            <th className="border p-2">Last Updated</th>
-            <td className="border p-2">{new Date(task.dates?.updatedAt).toLocaleDateString()}</td>
+            <th>Last Updated</th>
+            <td>{new Date(task.dates?.updatedAt).toLocaleDateString()}</td>
           </tr>
         </tbody>
       </table>
 
-      <div className="flex gap-2 mb-4">
+      <div className="button-group">
         <UpdateTaskDialog task={task} onTaskUpdated={handleUpdated} />
         <DeleteTaskDialog task={task} onTaskDeleted={handleDeleted} />
       </div>
 
-      <a href="/" className="text-blue-600 hover:underline">
-        ← Volver a la lista
-      </a>
+      <a href="/">← Volver a la lista</a>
     </div>
   );
 }

@@ -1,0 +1,32 @@
+.subtask-selector-container {
+  margin-bottom: 1rem;
+}
+
+.subtask-selector-title {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.subtask-selector-list {
+  padding: 0.5rem;
+  max-height: 160px;
+  overflow-y: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.subtask-selector-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.subtask-selector-checkbox {
+  margin: 0;
+}
+
+.subtask-selector-text {
+  font-size: 0.875rem;
+}

@@ -104,12 +104,36 @@ async function createTask(data) {
 
 app.get('/tasks', async (req, res) => {
   await db.read();
-  const enriched = db.data.tasks.map((task) => {
+
+  const { page = 1, limit = 10, status, priority } = req.query;
+
+  let filtered = db.data.tasks;
+
+  if (status) {
+    filtered = filtered.filter((t) => t.status === status);
+  }
+
+  if (priority) {
+    filtered = filtered.filter((t) => t.priority === priority);
+  }
+
+  const start = (page - 1) * limit;
+  const end = start + parseInt(limit);
+
+  const paginated = filtered.slice(start, end);
+
+  const enriched = paginated.map((task) => {
     const subtasks = resolveSubtasks(task, db.data.tasks);
     const estimates = computeEstimates(subtasks);
     return { ...task, subtasks, estimates };
   });
-  res.json(enriched);
+
+  res.json({
+    data: enriched,
+    total: filtered.length,
+    page: Number(page),
+    limit: Number(limit),
+  });
 });
 
 app.get('/tasks/:id', async (req, res) => {

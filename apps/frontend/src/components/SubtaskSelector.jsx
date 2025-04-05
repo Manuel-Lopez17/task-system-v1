@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { taskService } from '../services/taskService';
+import '../styles/SubtaskSelector.css';
 
 function SubtaskSelector({ selectedIds, onChange, disabledIds = [] }) {
   const [availableTasks, setAvailableTasks] = useState([]);
@@ -7,7 +8,7 @@ function SubtaskSelector({ selectedIds, onChange, disabledIds = [] }) {
   useEffect(() => {
     const fetchAvailableTasks = async () => {
       try {
-        const data = await taskService.getTasks();
+        const { data } = await taskService.getTasks({ paginate: false });
         setAvailableTasks(data);
       } catch (error) {
         console.error('Error al cargar tareas:', error);
@@ -25,19 +26,20 @@ function SubtaskSelector({ selectedIds, onChange, disabledIds = [] }) {
   };
 
   return (
-    <div className="mb-2">
-      <label className="block mb-1 font-semibold">Subtareas</label>
-      <div className="border p-2 rounded max-h-40 overflow-y-auto space-y-1">
+    <div className="subtask-selector-container">
+      <label className="subtask-selector-title">Subtareas</label>
+      <div className="subtask-selector-list">
         {availableTasks
           .filter((task) => !disabledIds.includes(task.id))
           .map((task) => (
-            <label key={task.id} className="flex items-center gap-2 cursor-pointer">
+            <label key={task.id} className="subtask-selector-item">
               <input
                 type="checkbox"
                 checked={selectedIds.includes(task.id)}
                 onChange={() => toggleSubtask(task.id)}
+                className="subtask-selector-checkbox"
               />
-              <span className="text-sm">{task.title}</span>
+              <span className="subtask-selector-text">{task.title}</span>
             </label>
           ))}
       </div>

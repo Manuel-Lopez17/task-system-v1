@@ -17,8 +17,11 @@ async function handleRequest(url, options, successMessage) {
 }
 
 export const taskService = {
-  async getTasks() {
-    return handleRequest(`${BASE_URL}`);
+  getTasks: async (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    const res = await fetch(`${BASE_URL}?${query}`);
+    if (!res.ok) throw new Error('Error al cargar tareas');
+    return res.json();
   },
 
   async getTask(id) {
