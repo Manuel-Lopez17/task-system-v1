@@ -215,3 +215,5 @@ app.delete('/tasks/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en el puerto ${port}`);
 });
+
+export default app;

@@ -27,8 +27,8 @@ Esto instalará las dependencias tanto del frontend como del backend.
 task_system_v1/
 │
 ├── apps/
-│   ├── backend/         # Servidor Express + LowDB
-│   └── frontend/        # Cliente Astro + React
+│   ├── backend/
+│   └── frontend/
 │
 ├── .gitignore
 ├── pnpm-workspace.yaml
@@ -48,13 +48,12 @@ Esto levanta el cliente en `http://localhost:4321`.
 
 ## 🧪 Testing
 
-Actualmente el proyecto no incluye tests automatizados, pero podés probarlo manualmente:
+1. Navegar a la carpeta apps/backend
+2. Ejecutar el comando
 
-1. Crear tareas desde la interfaz.
-2. Editarlas, eliminarlas y asignar subtareas.
-3. Verifica que los cambios persisten tras recargar.
-
-> Se pueden agregar pruebas con Vitest y Supertest más adelante.
+```bash
+pnpm test
+```
 
 ## ✅ Checklist de features
 
@@ -63,7 +62,6 @@ Actualmente el proyecto no incluye tests automatizados, pero podés probarlo man
 - [x] Validación con Valibot
 - [x] Persistencia con LowDB
 - [x] Notificaciones con toasts (efímeros)
-- [x] Diseño simple con Tailwind (en frontend)
 
 ## 🧑‍💻 Desarrollado con
 
@@ -75,5 +73,3 @@ Actualmente el proyecto no incluye tests automatizados, pero podés probarlo man
 - [pnpm](https://pnpm.io)
 
 ---
-
-¡Listo para usar o extender! 🚀
