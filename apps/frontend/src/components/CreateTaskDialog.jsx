@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import SubtaskSelector from './SubtaskSelector';
 import { taskService } from '../services/taskService';
 import '../styles/Dialog.css';
+import { priorityOptions, statusOptions } from '../constants/options';
+import SelectFilter from './SelectFilter';
 
 function CreateTaskDialog({ onTaskCreated }) {
   const [formData, setFormData] = useState({
@@ -31,13 +33,13 @@ function CreateTaskDialog({ onTaskCreated }) {
   return (
     <>
       <button onClick={openDialog} className="dialog-btn primary-btn">
-        Crear Tarea
+        Create new task
       </button>
       <dialog ref={dialogRef} className="dialog">
-        <h2 className="dialog-title">Crear Nueva Tarea</h2>
+        <h2 className="dialog-title">Create new task</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Título</label>
+            <label className="form-label">Title</label>
             <input
               type="text"
               required
@@ -47,7 +49,7 @@ function CreateTaskDialog({ onTaskCreated }) {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Descripción</label>
+            <label className="form-label">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -55,31 +57,20 @@ function CreateTaskDialog({ onTaskCreated }) {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Prioridad</label>
-            <select
+            <label className="form-label">Priority</label>
+            <SelectFilter
               value={formData.priority}
-              onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="form-select"
-            >
-              <option value="Low">Baja</option>
-              <option value="Medium">Media</option>
-              <option value="High">Alta</option>
-              <option value="Urgent">Urgente</option>
-            </select>
+              onChange={(value) => setFormData({ ...formData, priority: value })}
+              options={priorityOptions}
+            />
           </div>
           <div className="form-group">
-            <label className="form-label">Estado</label>
-            <select
+            <label className="form-label">Status</label>
+            <SelectFilter
               value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="form-select"
-            >
-              <option value="Backlog">Backlog</option>
-              <option value="Unstarted">Sin iniciar</option>
-              <option value="Started">En progreso</option>
-              <option value="Completed">Completada</option>
-              <option value="Canceled">Cancelada</option>
-            </select>
+              onChange={(value) => setFormData({ ...formData, status: value })}
+              options={statusOptions}
+            />
           </div>
           <div className="form-group">
             <label className="form-label">Estimate</label>
@@ -97,10 +88,10 @@ function CreateTaskDialog({ onTaskCreated }) {
           />
           <div className="form-actions">
             <button type="button" onClick={closeDialog} className="dialog-btn secondary-btn">
-              Cancelar
+              Cancel
             </button>
             <button type="submit" className="dialog-btn primary-btn">
-              Crear
+              Create Task
             </button>
           </div>
         </form>

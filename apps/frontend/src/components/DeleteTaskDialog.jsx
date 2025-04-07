@@ -22,17 +22,17 @@ function DeleteTaskDialog({ task, onTaskDeleted }) {
   return (
     <>
       <button onClick={openDialog} className="dialog-btn danger-btn">
-        Eliminar Tarea
+        Delete Task{' '}
       </button>
       <dialog ref={dialogRef} className="dialog">
-        <h2 className="dialog-title">Eliminar Tarea</h2>
-        <p>¿Estás seguro de eliminar la tarea "{task.title}"?</p>
+        <h2 className="dialog-title">Delete Task</h2>
+        <p>Delete task "{task.title}"?</p>
         <div className="form-actions">
           <button onClick={closeDialog} className="dialog-btn secondary-btn">
-            Cancelar
+            Cancel
           </button>
           <button onClick={handleDelete} className="dialog-btn danger-btn">
-            Eliminar
+            Delete Task
           </button>
         </div>
       </dialog>

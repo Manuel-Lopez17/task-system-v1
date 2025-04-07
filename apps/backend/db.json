@@ -57,12 +57,12 @@
       "title": "TEST 6",
       "description": "",
       "priority": "Medium",
-      "status": "Unstarted",
+      "status": "Started",
       "estimate": 1,
       "subtasks": [],
       "dates": {
         "createdAt": "2025-04-07T12:19:46.655Z",
-        "updatedAt": "2025-04-07T12:19:46.655Z"
+        "updatedAt": "2025-04-07T15:25:11.846Z"
       }
     }
   ],

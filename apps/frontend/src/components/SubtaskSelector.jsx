@@ -27,7 +27,7 @@ function SubtaskSelector({ selectedIds, onChange, disabledIds = [] }) {
 
   return (
     <div className="subtask-selector-container">
-      <label className="subtask-selector-title">Subtareas</label>
+      <label className="subtask-selector-title">Subtask</label>
       <div className="subtask-selector-list">
         {availableTasks
           .filter((task) => !disabledIds.includes(task.id))
