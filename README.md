@@ -43,8 +43,22 @@ task_system_v1/
 pnpm dev
 ```
 
-Esto levanta el servidor en `http://localhost:3000`.
+Esto levanta el servidor en `http://localhost:3000`.  
 Esto levanta el cliente en `http://localhost:4321`.
+
+## 🧹 Formateo y Linter
+
+- **Ejecutar linter** (para detectar errores y advertencias de estilo/código):
+
+```bash
+pnpm lint
+```
+
+- **Formatear automáticamente el código** con Prettier:
+
+```bash
+pnpm format
+```
 
 ## 🧪 Testing
 
