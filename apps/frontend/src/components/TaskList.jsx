@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CreateTaskDialog from './CreateTaskDialog';
 import { taskService } from '../services/taskService';
 import '../styles/TaskList.css';
+import SelectFilter from './SelectFilter';
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -11,6 +12,28 @@ function TaskList() {
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState({ status: '', priority: '' });
   const [sort, setSort] = useState('desc');
+
+  const statusOptions = [
+    { label: 'All Status', value: '' },
+    { label: 'Backlog', value: 'Backlog' },
+    { label: 'Unstarted', value: 'Unstarted' },
+    { label: 'Started', value: 'Started' },
+    { label: 'Completed', value: 'Completed' },
+    { label: 'Canceled', value: 'Canceled' },
+  ];
+
+  const priorityOptions = [
+    { label: 'All Priority', value: '' },
+    { label: 'Low', value: 'Low' },
+    { label: 'Medium', value: 'Medium' },
+    { label: 'High', value: 'High' },
+    { label: 'Urgent', value: 'Urgent' },
+  ];
+
+  const sortOptions = [
+    { label: 'Most recent first', value: 'desc' },
+    { label: 'Oldest first', value: 'asc' },
+  ];
 
   const fetchTasks = async () => {
     setLoading(true);
@@ -46,33 +69,20 @@ function TaskList() {
       <h1 className="task-title">Task List</h1>
 
       <div className="task-filters">
-        <select
+        <SelectFilter
           value={filters.status}
-          onChange={(e) => handleFilterChange('status', e.target.value)}
-        >
-          <option value="">All Status</option>
-          <option value="Backlog">Backlog</option>
-          <option value="Unstarted">Unstarted</option>
-          <option value="Started">Started</option>
-          <option value="Completed">Completed</option>
-          <option value="Canceled">Canceled</option>
-        </select>
+          onChange={(value) => handleFilterChange('status', value)}
+          options={statusOptions}
+        />
 
-        <select
+        <SelectFilter
           value={filters.priority}
-          onChange={(e) => handleFilterChange('priority', e.target.value)}
-        >
-          <option value="">All Priority</option>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-          <option value="Urgent">Urgent</option>
-        </select>
+          onChange={(value) => handleFilterChange('priority', value)}
+          options={priorityOptions}
+        />
 
-        <select value={sort} onChange={(e) => setSort(e.target.value)}>
-          <option value="desc">Most recent first</option>
-          <option value="asc">Oldest first</option>
-        </select>
+        <SelectFilter value={sort} onChange={setSort} options={sortOptions} />
+
         <CreateTaskDialog onTaskCreated={handleTaskCreated} />
       </div>
 
