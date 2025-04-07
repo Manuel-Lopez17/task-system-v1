@@ -1,4 +1,3 @@
-// src/components/ToasterWrapper.jsx
 import { Toaster } from 'sonner';
 
 export default function ToasterWrapper() {
