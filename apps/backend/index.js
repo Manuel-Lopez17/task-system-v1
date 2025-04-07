@@ -105,7 +105,7 @@ async function createTask(data) {
 app.get('/tasks', async (req, res) => {
   await db.read();
 
-  const { page = 1, limit = 10, status, priority } = req.query;
+  const { page = 1, limit = 10, status, priority, sort = 'desc' } = req.query;
 
   let filtered = db.data.tasks;
 
@@ -116,6 +116,12 @@ app.get('/tasks', async (req, res) => {
   if (priority) {
     filtered = filtered.filter((t) => t.priority === priority);
   }
+
+  filtered = filtered.sort((a, b) => {
+    const dateA = new Date(a.dates.createdAt);
+    const dateB = new Date(b.dates.createdAt);
+    return sort === 'asc' ? dateA - dateB : dateB - dateA;
+  });
 
   const start = (page - 1) * limit;
   const end = start + parseInt(limit);

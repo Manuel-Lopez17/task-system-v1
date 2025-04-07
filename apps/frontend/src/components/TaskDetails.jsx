@@ -81,9 +81,9 @@ function TaskDetails({ taskId }) {
             <th>Estimate Breakdown</th>
             <td>
               <ul>
-                <li>⏳ Pendiente: {task.estimates?.pending}</li>
-                <li>🔄 En progreso: {task.estimates?.inProgress}</li>
-                <li>📊 Total: {task.estimates?.total}</li>
+                <li>Pending: {task.estimates?.pending}</li>
+                <li>Started: {task.estimates?.inProgress}</li>
+                <li>Total: {task.estimates?.total}</li>
               </ul>
             </td>
           </tr>

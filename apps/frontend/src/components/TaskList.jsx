@@ -10,11 +10,12 @@ function TaskList() {
   const [limit] = useState(5);
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState({ status: '', priority: '' });
+  const [sort, setSort] = useState('desc');
 
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const { data, total } = await taskService.getTasks({ page, limit, ...filters });
+      const { data, total } = await taskService.getTasks({ page, limit, sort, ...filters });
       setTasks(data);
       setTotal(total);
     } catch (err) {
@@ -26,7 +27,7 @@ function TaskList() {
 
   useEffect(() => {
     fetchTasks();
-  }, [page, filters]);
+  }, [page, filters, sort]);
 
   const handleTaskCreated = () => {
     setPage(1);
@@ -49,7 +50,7 @@ function TaskList() {
           value={filters.status}
           onChange={(e) => handleFilterChange('status', e.target.value)}
         >
-          <option value="">Todos los estados</option>
+          <option value="">All Status</option>
           <option value="Backlog">Backlog</option>
           <option value="Unstarted">Unstarted</option>
           <option value="Started">Started</option>
@@ -61,11 +62,16 @@ function TaskList() {
           value={filters.priority}
           onChange={(e) => handleFilterChange('priority', e.target.value)}
         >
-          <option value="">Todas las prioridades</option>
+          <option value="">All Priority</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
           <option value="Urgent">Urgent</option>
+        </select>
+
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="desc">Most recent first</option>
+          <option value="asc">Oldest first</option>
         </select>
         <CreateTaskDialog onTaskCreated={handleTaskCreated} />
       </div>
