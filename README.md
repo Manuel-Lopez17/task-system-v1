@@ -30,9 +30,17 @@ task_system_v1/
 │   ├── backend/
 │   └── frontend/
 │
+├── node_modules/
+├── .gitattributes
 ├── .gitignore
+├── .prettierignore
+├── .prettierrc
+├── eslint.config.js
+├── package.json
+├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 └── README.md
+
 ```
 
 ## 🖥️ Levantar la aplicación
