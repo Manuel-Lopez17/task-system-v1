@@ -1,3 +1,8 @@
+/**
+ * Backend de tareas con Express, LowDB y validación mediante Valibot.
+ * Soporta operaciones CRUD, subtareas, y evita dependencias circulares.
+ */
+
 import express from 'express';
 import cors from 'cors';
 import { JSONFilePreset } from 'lowdb/node';
@@ -10,8 +15,14 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
+/**
+ * Base de datos inicializada con estructura para tareas.
+ */
 const db = await JSONFilePreset('db.json', { tasks: [], nextId: 1 });
 
+/**
+ * Esquema de validación para una tarea.
+ */
 const TaskSchema = object({
   id: string(),
   title: string(),
@@ -26,6 +37,13 @@ const TaskSchema = object({
   }),
 });
 
+/**
+ * Verifica si existe una dependencia circular entre tareas.
+ * @param {string} taskId - ID de la tarea principal.
+ * @param {string[]} subtaskIds - IDs de subtareas.
+ * @param {Set<string>} visited - Conjunto de tareas ya visitadas.
+ * @returns {boolean} - True si hay dependencia circular.
+ */
 function hasCircularDependency(taskId, subtaskIds, visited = new Set()) {
   if (visited.has(taskId)) return true;
   visited.add(taskId);
@@ -40,6 +58,13 @@ function hasCircularDependency(taskId, subtaskIds, visited = new Set()) {
   return false;
 }
 
+/**
+ * Resuelve recursivamente las subtareas de una tarea.
+ * @param {object} task - Tarea actual.
+ * @param {object[]} allTasks - Lista de todas las tareas.
+ * @param {number} depth - Profundidad actual de la recursión.
+ * @returns {object[]} - Lista de subtareas resueltas.
+ */
 function resolveSubtasks(task, allTasks, depth = 0) {
   if (depth > 5) return [];
   return (task.subtasks || [])
@@ -54,6 +79,11 @@ function resolveSubtasks(task, allTasks, depth = 0) {
     .filter(Boolean);
 }
 
+/**
+ * Calcula los estimados totales, pendientes y en progreso de una lista de subtareas.
+ * @param {object[]} subtasks - Lista de subtareas.
+ * @returns {{ pending: number, inProgress: number, total: number }}
+ */
 function computeEstimates(subtasks) {
   let pending = 0,
     inProgress = 0,
@@ -71,6 +101,11 @@ function computeEstimates(subtasks) {
   return { pending, inProgress, total };
 }
 
+/**
+ * Crea una nueva tarea y la guarda en la base de datos.
+ * @param {object} data - Datos de la tarea.
+ * @returns {Promise<object>} - Tarea creada con subtareas y estimaciones.
+ */
 async function createTask(data) {
   const newTaskId = uuidv4();
   const subtaskIds = data.subtasks || [];
@@ -102,6 +137,9 @@ async function createTask(data) {
   return { ...newTask, subtasks: resolvedSubtasks, estimates };
 }
 
+/**
+ * Obtiene todas las tareas con filtros, orden y paginación.
+ */
 app.get('/tasks', async (req, res) => {
   await db.read();
 
@@ -142,6 +180,9 @@ app.get('/tasks', async (req, res) => {
   });
 });
 
+/**
+ * Obtiene una tarea por ID.
+ */
 app.get('/tasks/:id', async (req, res) => {
   await db.read();
   const task = db.data.tasks.find((t) => t.id === req.params.id);
@@ -151,6 +192,9 @@ app.get('/tasks/:id', async (req, res) => {
   res.json({ ...task, subtasks, estimates });
 });
 
+/**
+ * Crea una nueva tarea a partir del cuerpo del request.
+ */
 app.post('/tasks', async (req, res) => {
   await db.read();
   try {
@@ -167,6 +211,9 @@ app.post('/tasks', async (req, res) => {
   }
 });
 
+/**
+ * Actualiza una tarea existente por ID.
+ */
 app.put('/tasks/:id', async (req, res) => {
   await db.read();
   const task = db.data.tasks.find((t) => t.id === req.params.id);
@@ -204,6 +251,9 @@ app.put('/tasks/:id', async (req, res) => {
   }
 });
 
+/**
+ * Elimina una tarea por ID si no está siendo usada como subtask.
+ */
 app.delete('/tasks/:id', async (req, res) => {
   await db.read();
   const index = db.data.tasks.findIndex((t) => t.id === req.params.id);
@@ -218,6 +268,7 @@ app.delete('/tasks/:id', async (req, res) => {
   res.json(deleted[0]);
 });
 
+// Inicio del servidor
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en el puerto ${port}`);
 });
