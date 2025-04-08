@@ -1,14 +1,23 @@
 export const priorityOptions = [
-  { label: 'Baja', value: 'Low' },
-  { label: 'Media', value: 'Medium' },
-  { label: 'Alta', value: 'High' },
-  { label: 'Urgente', value: 'Urgent' },
+  { label: 'Low', value: 'Low' },
+  { label: 'Medium', value: 'Medium' },
+  { label: 'High', value: 'High' },
+  { label: 'Urgent', value: 'Urgent' },
 ];
 
 export const statusOptions = [
   { label: 'Backlog', value: 'Backlog' },
-  { label: 'Sin iniciar', value: 'Unstarted' },
-  { label: 'En progreso', value: 'Started' },
-  { label: 'Completada', value: 'Completed' },
-  { label: 'Cancelada', value: 'Canceled' },
+  { label: 'Unstarted', value: 'Unstarted' },
+  { label: 'Started', value: 'Started' },
+  { label: 'Completed', value: 'Completed' },
+  { label: 'Canceled', value: 'Canceled' },
+];
+
+export const filterPriorityOptions = [{ label: 'All Priority', value: '' }, ...priorityOptions];
+
+export const filterStatusOptions = [{ label: 'All Status', value: '' }, ...statusOptions];
+
+export const sortOptions = [
+  { label: 'Most recent first', value: 'desc' },
+  { label: 'Oldest first', value: 'asc' },
 ];

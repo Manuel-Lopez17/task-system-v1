@@ -66,7 +66,7 @@ function hasCircularDependency(taskId, subtaskIds, visited = new Set()) {
  * @returns {object[]} - Lista de subtareas resueltas.
  */
 function resolveSubtasks(task, allTasks, depth = 0) {
-  if (depth > 5) return [];
+  if (depth > 10) return [];
   return (task.subtasks || [])
     .map((id) => {
       const sub = allTasks.find((t) => t.id === id);

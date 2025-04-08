@@ -3,6 +3,7 @@ import CreateTaskDialog from './CreateTaskDialog';
 import { taskService } from '../services/taskService';
 import '../styles/TaskList.css';
 import SelectFilter from './SelectFilter';
+import { filterStatusOptions, filterPriorityOptions, sortOptions } from '../constants/options';
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -12,28 +13,6 @@ function TaskList() {
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState({ status: '', priority: '' });
   const [sort, setSort] = useState('desc');
-
-  const statusOptions = [
-    { label: 'All Status', value: '' },
-    { label: 'Backlog', value: 'Backlog' },
-    { label: 'Unstarted', value: 'Unstarted' },
-    { label: 'Started', value: 'Started' },
-    { label: 'Completed', value: 'Completed' },
-    { label: 'Canceled', value: 'Canceled' },
-  ];
-
-  const priorityOptions = [
-    { label: 'All Priority', value: '' },
-    { label: 'Low', value: 'Low' },
-    { label: 'Medium', value: 'Medium' },
-    { label: 'High', value: 'High' },
-    { label: 'Urgent', value: 'Urgent' },
-  ];
-
-  const sortOptions = [
-    { label: 'Most recent first', value: 'desc' },
-    { label: 'Oldest first', value: 'asc' },
-  ];
 
   const fetchTasks = async () => {
     setLoading(true);
@@ -72,13 +51,13 @@ function TaskList() {
         <SelectFilter
           value={filters.status}
           onChange={(value) => handleFilterChange('status', value)}
-          options={statusOptions}
+          options={filterStatusOptions}
         />
 
         <SelectFilter
           value={filters.priority}
           onChange={(value) => handleFilterChange('priority', value)}
-          options={priorityOptions}
+          options={filterPriorityOptions}
         />
 
         <SelectFilter value={sort} onChange={setSort} options={sortOptions} />
